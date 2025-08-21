@@ -1,0 +1,51 @@
+% !TEX root = ./main.tex
+
+\section{Indistinguishability Obfuscator for Turing Machines}
+
+\begin{definition}[Indistinguishability Obfuscator for Turing Machines]
+		A succinct indistinguishability obfuscator for Turing machines  consists of a PPT machine $\iOM$ that works as follows:
+		\begin{itemize}
+			\item $\iOM$ takes as input the security parameter $\secparam$, the Turing machine $\TM$ to obfuscate, an input length $n$, and time bound $t$.
+			\item $\iOM$ outputs a Turing machine $\widetilde{\TM}$ which is an obfuscation of $\TM$ corresponding to input length $n$ and time bound $t$. $\widetilde{\TM}$ takes as input $x \in \bin^n$.
+
+		\end{itemize}
+		The scheme should satisfy the following requirements:
+		\begin{description}
+			\item[Correctness] For all $\secpar \in \NN$, for all $\TM \in \mathcal{M}_\secpar$, for all inputs $x \in \bin^n$, time bounds $t'$ such that $t' \le t$, let $y$ be the output of $\TM(x)$ after at most $t$ steps, then
+			\[
+				\prob{\widetilde{\TM} \leftarrow \iOM(\secparam,1^n,1^{\log t},\TM)~:~\widetilde{\TM}(x)=y} = 1\enspace.
+			\]
+			\item[Security] It holds that
+			\[
+						\set{\iOM(\secparam,1^n,1^{\log t},\TM_0)}_{\begin{subarray}{l}\secpar,t,n,\\ \TM_0,\TM_1\end{subarray}} \approx_c
+							\set{\iOM(\secparam,1^n,1^{\log t},\TM_1)}_{\begin{subarray}{l}\secpar,t,n,\\ \TM_0,\TM_1\end{subarray}} \enspace,
+			\]
+			where $\secpar\in \NN$, $n\leq t\leq 2^{\secpar}$, and $\TM_0, \TM_1$ are any pair of machines of the same size such that for any input $x\in\bin^n$ both halt after the same number of steps with the same output.
+
+
+			\item[Efficiency and Succinctness] We require that the running time of $\iOM$ and the length of its output, namely the obfuscated machine $\widetilde{\TM}$, is $\poly[|\TM|,\log t,n,\secpar]$. We also require that the running time $\tilde t_x$ of $\widetilde{\TM}(x)$ is $\poly[t_x,|\TM|, n,\secpar]$, where $t_x$ is the running time of $\TM(x)$.
+		\end{description}
+	\end{definition}
+
+\section{Witness Encryption}
+
+\begin{definition}
+		A witness encryption scheme for an $\npol$ language $\lang$, with corresponding witness relation $R_\lang$, consists of the following two polynomial-time algorithms:
+		
+		\begin{description}
+			\item[Encryption.] The probabilistic algorithm $\WE.\enc(\secparam,x,m)$ takes as input a security parameter $\secparam$, a string $x \in \bin^*$, and a message $m \in \bin$. It outputs a ciphertext $\ciphertext$.
+			\item[Decryption.] The algorithm $\WE.\dec(\ciphertext,w)$ takes as input a ciphertext $\ciphertext$, a string $w \in \bin^*$. It outputs either a message $m \in \bin$.
+		\end{description}
+		The above algorithms satisfy the following conditions:
+		\begin{itemize}
+			\item \textbf{Correctness.} For any security parameter $\secpar$, for any $m \in \bin$, and for any $(x,w) \in R_\lang$, we have that
+			\[
+				\prob{\ciphertext \leftarrow \WE.\enc(\secparam,x,m)~:~ \WE.\dec(\ciphertext,w)=m} = 1\enspace.
+			\]
+			\item \textbf{Security.} For any non-uniform \ppt adversary $\adv$, there exists a negligible function $\negl[\cdot]$ such that for any $\secpar \in \NN$, and any $x \notin \lang$, we have that
+			\[
+				\set{\WE.\enc(\secparam,x,0)}_{\secpar \in \NN, x\notin \lang} \approx_c \set{\WE.\enc(\secparam,x,1)}_{\secpar \in \NN, x\notin \lang}\enspace.
+			\]
+		\end{itemize}
+	\end{definition}
+
