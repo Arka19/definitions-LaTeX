@@ -81,6 +81,9 @@
 \usepackage{caption}
 \usepackage{ifthen}
 
+\usepackage{imakeidx}
+\makeindex
+
 
 
 
@@ -114,52 +117,10 @@ keys]{cryptocode}
 \usepackage[pdftex,bookmarks=true,pdfstartview=FitH,colorlinks,linkcolor=Cerulean,filecolor=Cerulean,citecolor=NavyBlue,urlcolor=Cerulean]{hyperref}
 \pagestyle{plain}
 
-\newcommand{\bfmatrix}[1]{\mathbf{#1}}
-\renewcommand\vec{\mathbf}
-\newcommand{\llbrace}{\left\lbrace}
-\newcommand{\rrbrace}{\right\rbrace}
-\newcommand{\round}[1]{\left\lfloor #1 \right\rceil}
-\newcommand{\PR}{\mathbb{P}}
-\newcommand\inner[2]{\langle #1, #2 \rangle}
-\newcommand{\randomOracle}{\mathcal{O}}
-\newcommand{\oracle}[1]{\mathcal{#1}}
-\newcommand{\pspace}{\mathsf{PSPACE}}
-\newcommand{\iproof}{\mathsf{IP}}
-\newcommand{\CRHF}{\mathsf{CRHF}}
-\newcommand{\OWP}{\mathsf{OWP}}
-\newcommand{\OWF}{\mathsf{OWF}}
-\newcommand{\TDF}{\mathsf{TDF}}
-\newcommand{\ckt}{\mathsf{C}}
-\newcommand{\alice}{\mathsf{Alice}}
-\newcommand{\bob}{\mathsf{Bob}}
-\newcommand{\eve}{\mathsf{Eve}}
-\newcommand{\UOWHF}{\mathsf{UOWHF}}
-\newcommand{\dCRHF}{\mathsf{dCRHF}}
-\newcommand{\DTIME}{\mathsf{DTIME}}
-\newcommand{\DSPACE}{\mathsf{DSPACE}}
-\newcommand{\BPTIME}{\mathsf{BPTIME}}
-\newcommand{\SZK}{\mathsf{SZK}}
-\newcommand{\primitive}[1]{\mathsf{#1}}
-\newcommand{\machine}[1]{\mathsf{#1}}
-\newcommand{\lang}{\mathsf{L}}
 
 
-%ciphertext
-\newcommand{\ciphertext}{\mathsf{ct}}
 
-%Commitment
-\newcommand{\com}{\mathsf{com}}
-
-%Obfuscation
-\newcommand{\iOM}{\mathsf{iOM}}
-
-%Witness Encryption
-\newcommand{\WE}{\mathsf{WE}}
-
-\newcommand{\NIWI}{\mathsf{NIWI}}
-
-\newcommand{\prove}{\mathsf{Prove}}
-\renewcommand{\verify}{\mathsf{Verify}}
+\input{macros}
 
 
 \begin{document}
@@ -181,6 +142,7 @@ Collect definitions of cryptographic primitives so that it is easy to copy and u
 \newpage
 
 \chapter{Notation}
+	\input{notation}
 
 \chapter{Probability}
 	\input{probability}
@@ -204,7 +166,10 @@ Collect definitions of cryptographic primitives so that it is easy to copy and u
 
 \newpage
 \bibliographystyle{alpha}
-\bibliography{./cryptobib/abbrev0,./cryptobib/crypto,./extrabib}
+\bibliography{./cryptobib/abbrev0,./cryptobib/crypto}
+
+\newpage 
+\printindex 
 
 
 

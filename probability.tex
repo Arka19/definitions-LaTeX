@@ -3,6 +3,7 @@
 \section{Computational Indistinguishability}
 
 \begin{definition}[Computational Indistinguishability]
+	\index{Indistinguishability!Computational}
 	Two ensembles $X=\{X_\alpha\}_{\alpha \in S}$ and $Y=\{Y_\alpha\}_{\alpha \in S}$ are said to be computationally indistinguishable, denoted by $X \approx_c Y$, if for every non-uniform $\ppt$ distinguisher $\ddv$, every polynomial $\pp$, all sufficiently large $\secpar$ and every $\alpha \in \bin^{\poly} \cap S$
 	\[
 		\Big| \prob{\ddv(\secparam,X_\alpha)=1} - \prob{\ddv(\secparam,Y_\alpha)=1} \Big| < \frac{1}{\pp(\secpar)}\enspace,
@@ -14,6 +15,7 @@
 \section{Statistical Indistinguishability}
 
 \begin{definition}[Statistical Indistinguishability]
+	\index{Indistinguishability!Statistical}
 	Two ensembles $X=\{X_\alpha\}_{\alpha \in S}$ and $Y=\{Y_\alpha\}_{\alpha \in S}$ are said to be statistically indistinguishable, denoted by ${X \approx_s Y}$, if for every polynomial $\pp$, all sufficiently large $\secpar$ and every $\alpha \in \bin^{\poly} \cap S$
 	\[ 
 	 \Delta(X_\alpha,Y_\alpha) < \frac{1}{\pp(\secpar)}\enspace,

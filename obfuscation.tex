@@ -3,6 +3,7 @@
 \section{Indistinguishability Obfuscator for Turing Machines}
 
 \begin{definition}[Indistinguishability Obfuscator for Turing Machines]
+		\index{Indistinguishability Obfuscation!Turing Machines}
 		A succinct indistinguishability obfuscator for Turing machines  consists of a PPT machine $\iOM$ that works as follows:
 		\begin{itemize}
 			\item $\iOM$ takes as input the security parameter $\secparam$, the Turing machine $\TM$ to obfuscate, an input length $n$, and time bound $t$.
@@ -13,7 +14,7 @@
 		\begin{description}
 			\item[Correctness] For all $\secpar \in \NN$, for all $\TM \in \mathcal{M}_\secpar$, for all inputs $x \in \bin^n$, time bounds $t'$ such that $t' \le t$, let $y$ be the output of $\TM(x)$ after at most $t$ steps, then
 			\[
-				\prob{\widetilde{\TM} \leftarrow \iOM(\secparam,1^n,1^{\log t},\TM)~:~\widetilde{\TM}(x)=y} = 1\enspace.
+				\probsublong{\widetilde{\TM} \leftarrow \iOM(\secparam,1^n,1^{\log t},\TM)}{\widetilde{\TM}(x)=y} = 1\enspace.
 			\]
 			\item[Security] It holds that
 			\[
@@ -30,21 +31,22 @@
 \section{Witness Encryption}
 
 \begin{definition}
-		A witness encryption scheme for an $\npol$ language $\lang$, with corresponding witness relation $R_\lang$, consists of the following two polynomial-time algorithms:
+		\index{Witness Encryption}
+		A witness encryption scheme $\WE = (\enc,\dec)$ for an $\npol$ language $\lang$, with corresponding witness relation $R_\lang$, consists of the following two polynomial-time algorithms:
 		
 		\begin{description}
-			\item[Encryption.] The probabilistic algorithm $\WE.\enc(\secparam,x,m)$ takes as input a security parameter $\secparam$, a string $x \in \bin^*$, and a message $m \in \bin$. It outputs a ciphertext $\ciphertext$.
-			\item[Decryption.] The algorithm $\WE.\dec(\ciphertext,w)$ takes as input a ciphertext $\ciphertext$, a string $w \in \bin^*$. It outputs either a message $m \in \bin$.
+			\item[Encryption.] The probabilistic algorithm $\enc(\secparam,x,m)$ takes as input a security parameter $\secparam$, a string $x \in \bin^*$, and a message $m \in \bin$. It outputs a ciphertext $\ciphertext$.
+			\item[Decryption.] The algorithm $\dec(\ciphertext,w)$ takes as input a ciphertext $\ciphertext$, a string $w \in \bin^*$. It outputs either a message $m \in \bin$.
 		\end{description}
 		The above algorithms satisfy the following conditions:
 		\begin{itemize}
 			\item \textbf{Correctness.} For any security parameter $\secpar$, for any $m \in \bin$, and for any $(x,w) \in R_\lang$, we have that
 			\[
-				\prob{\ciphertext \leftarrow \WE.\enc(\secparam,x,m)~:~ \WE.\dec(\ciphertext,w)=m} = 1\enspace.
+				\probsublong{\ciphertext \leftarrow \enc(\secparam,x,m)}{\dec(\ciphertext,w)=m} = 1\enspace.
 			\]
 			\item \textbf{Security.} For any non-uniform \ppt adversary $\adv$, there exists a negligible function $\negl[\cdot]$ such that for any $\secpar \in \NN$, and any $x \notin \lang$, we have that
 			\[
-				\set{\WE.\enc(\secparam,x,0)}_{\secpar \in \NN, x\notin \lang} \approx_c \set{\WE.\enc(\secparam,x,1)}_{\secpar \in \NN, x\notin \lang}\enspace.
+				\set{\enc(\secparam,x,0)}_{\secpar \in \NN, x\notin \lang} \approx_c \set{\enc(\secparam,x,1)}_{\secpar \in \NN, x\notin \lang}\enspace.
 			\]
 		\end{itemize}
 	\end{definition}

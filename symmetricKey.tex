@@ -1,10 +1,43 @@
 % !TEX root = ./main.tex
 
-\subsection{Non-interactive Commitment Schemes}
-	\label{sec:defn:commitment}
+\section{One-way Function}
+
+\begin{definition}[One-way Function]
+		\index{One-way Function}
+		\label{def:strongOWF}
+		A function $f:\bin^{*} \mapsto \bin^{*}$ is a one way function if it satisfies the following two conditions: 
+		\begin{enumerate}
+			\item \emph{ Easy to compute}: There is a $\ppt$ algorithm $C$ s.t. $\forall x \in \{0, 1\}^{*}$,
+			\[
+				\prob{r \sample \bin^{m}~:~C(x;r) = f(x)} =1.
+			\]
+			\item \emph{Hard to invert}: For every non-uniform $\ppt$ adversary $\adv$, 
+			\[
+				\probsublong{x \sample \bin^\secpar, \widetilde{x} \leftarrow \adv(\secparam, f(x))}{f(\widetilde{x})=f(x)} \le \negl
+			\]		
+		\end{enumerate}
+	\end{definition}
+
+
+\section{Pseudorandom Generators}
+
+
+\begin{definition}[Psedudorandom Generators]
+	\index{Pseudorandom Generators (PRG)}
+	A deterministic function $\prg: \bin^\secpar \rightarrow \bin^{p(\secpar)}$ is called a pseudorandom generator (PRG) if:
+	\begin{enumerate}
+		\item (efficiency): $\prg$ can be computed in polynomial time,
+		\item (expansion): $p(\secpar) > \secpar$,
+		\item $\llbrace x \sample \bin^\secpar: \prg(x) \rrbrace \approx_c \llbrace U_{p(\secpar)}\rrbrace$ , where $U_{p(\secpar)}$ is the uniform distribution over $p(\secpar)$ bits.
+	\end{enumerate}
+\end{definition}
+
+
+\section{Non-interactive Commitment Schemes}
 	
 	We define below bit commitment schemes
 	\begin{definition}[Non-interactive Bit Commitment Schemes]
+		\index{Non-interactive Commitment}
 		A polynomial time computable function: $\com: \bin \times \bin^\secpar \mapsto \bin^{\ell(\secpar)}$ is a bit commitment if it satisfies the properties below:
 		\begin{description}
 			\item[Binding:] For any $r,r' \in \bin^\secpar, b,b' \in \bin$, if $\com(b;r)=\com(b';r')$ then $b=b'$.
@@ -15,4 +48,40 @@
 			where computational indistinguishability is with respect to arbitrary non-uniform $\ppt$ distinguisher.
 		\end{description}
 		
+	\end{definition}
+
+
+	\section{Signature Scheme}
+		
+	
+	
+	\begin{definition}
+		\index{Signature Scheme}
+		\label{def:signatures}
+		An signature scheme consists of three polynomial-time algorithms $(\gen,\sign,\verify)$. 
+		\begin{itemize}
+			\item[--] $\gen$ is $\ppt$ algorithm that takes as input $\secparam$ and generates a key and verification key. $(\sk,\vk) \leftarrow \gen(\secparam)$.
+			\item[--] $\sign$ is a $\ppt$ algorithm that computes the signature on a message $m$.  $\sigma \coloneqq \sign(\sk,m)$.
+			\item[--] $\verify$ is a deterministic algorithm verifies the signature using the verification key. $\verify(\vk, m,\sigma)$ returns 0 or 1.
+		\end{itemize}
+		A  signature scheme that is existentially unforgeable against chosen message attacks if the following hold. 
+			\begin{description}
+				\item[Correctness] For every message $m \in \mathcal{M}$ (message space),
+				\[
+					\prob{\verify(\vk,m,\sigma) =1~:~(\vk,\sk) \leftarrow \gen(\secparam), \sigma \leftarrow\sign(\sk,m)} = 1
+				\]
+				\item[Security] For any $\ppt$ adversary $\adv$
+				\[
+						\probsublong{\begin{array}{l}
+						(\vk,\sk) \leftarrow \gen(\secparam)\\
+						(m,\sigma) \leftarrow \adv^{\sign(\sk,\cdot)}(\vk)
+					\end{array}}{ \begin{array}{l}
+								\adv \text{ did not query }m\\
+								\verify(\vk,m,\sigma) =1
+						\end{array} 
+					} < \negl 
+				\]
+				where $\adv^{\sign(\sk,\cdot)}$ indicates that $\adv$ has access to an oracle that returns the signature on the queried message $m$.
+			\end{description}
+
 	\end{definition}

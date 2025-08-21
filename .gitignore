@@ -20,3 +20,9 @@
 *.fdb_latexmk
 
 *.toc
+
+*.idx
+
+*.ilg
+
+*.ind

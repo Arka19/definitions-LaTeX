@@ -5,25 +5,86 @@
 \section{Non-interactive Witness Indistinguishability (NIWI)}
 	\label{sec:defn:NIWI}
 	
-	\begin{definition}[\cite{C:BarOngVad03}] A non-interactive witness-indistinguishable proof system $\NIWI=(\NIWI.\prove,\NIWI.\verify)$ for an $\npol$ relation $R_\lang$ consists of two polynomial-time algorithms:
+	\begin{definition} 
+	\index{Non-interactive Witness Indistinguishability}
+	A non-interactive witness-indistinguishable proof system $\NIWI=(\prove,\verify)$ for an $\npol$ relation $R_\lang$ consists of two polynomial-time algorithms:
 		\begin{itemize}
-			\item a probabilistic prover $\NIWI.\prove(x,w,\secparam)$ that given an instance $x$, witness $w$, and security parameter $\secparam$, produces a proof $\pi$.
-			\item a deterministic verifier $\NIWI.\verify(x,\pi)$ that verifies the proof.
+			\item a probabilistic prover $\prove(x,w,\secparam)$ that given an instance $x$, witness $w$, and security parameter $\secparam$, produces a proof $\pi$.
+			\item a deterministic verifier $\verify(x,\pi)$ that verifies the proof.
 		\end{itemize}
 		We make the following requirements:
 		\begin{description}
 			\item[Completeness] for every $\secpar \in \NN, (x,w) \in R_\lang$,
 			\[
-				\prob{\pi \leftarrow \NIWI.\prove(x,w,\secparam)~:~\NIWI.\verify(x,\pi)=1} = 1
+				\probsublong{\pi \leftarrow \prove(x,w,\secparam)}{\verify(x,\pi)=1} = 1
 			\]
 			\item[Soundness] for every $x \notin \lang$ and $\pi \in \bin^*$,
 			\[
-				\NIWI.\verify(x,\pi)=0\enspace.
+				\verify(x,\pi)=0\enspace.
 			\]
 			\item[Witness Indistinguishability] It holds that
 			\[
-				\Big\lbrace \NIWI.\prove(x,w_0,\secparam) \Big\rbrace_{\begin{subarray}{l}\secpar,x,\\w_0,w_1 \end{subarray}} \approx_c 				\Big\lbrace \NIWI.\prove(x,w_1,\secparam) \Big\rbrace_{\begin{subarray}{l}\secpar,x,\\w_0,w_1 \end{subarray}}\enspace,
+				\Big\lbrace \prove(x,w_0,\secparam) \Big\rbrace_{\begin{subarray}{l}\secpar,x,\\w_0,w_1 \end{subarray}} \approx_c 				\Big\lbrace \prove(x,w_1,\secparam) \Big\rbrace_{\begin{subarray}{l}\secpar,x,\\w_0,w_1 \end{subarray}}\enspace,
 			\]
 where $\secpar \in \NN, x \in \bin^\secpar, w_0,w_1 \in R_\lang(x).$
 		\end{description}
 	\end{definition}
+
+
+\section{Interactive Proof}
+
+\begin{definition}
+		\index{Interactive Proof}
+		An interactive protocol $(\prover, \verifier)$ between a polynomial time prover $\prover$ and $\ppt$ verifier $\verifier$, for a language $\lang \in \npol$ is an interactive proof (resp. argument) if the following holds.
+		\begin{description}
+			\item[Completeness:] For every $x \in \lang$,
+			\[
+				\prob{\out_\verifier\langle \prover(x,w), \verifier(x)\rangle=1} =1\enspace.
+			\]
+			\item[Soundness (resp. computational soundness):] For any non-uniform (resp. $\ppt$) $\prover^*$, there exists a negligible function $\negl[\cdot ]$ such that for all $\secpar\in\NN$ and $ x \in \bin^{\secpar}\setminus \lang$,
+			\[
+				\prob{\out_\verifier\langle \prover^*, \verifier(x)\rangle=1} \le \negl[\secpar]\enspace.
+			\]
+		\end{description}
+	\end{definition}
+
+
+\section{Zero-Knowledge}
+
+An interactive proof (resp. argument) $(\prover, \verifier)$ between a polynomial time prover $\prover$ and $\ppt$ verifier $\verifier$, for a language $\mathcal{L}$ is a zero knowledge proof (resp. argument) if the following holds.
+
+\begin{definition}[\emph{GMR}\cite{STOC:GolMicRac85} Zero-knowledge]
+	\index{Zero Knowledge!GMR}
+	 An interactive proof (resp. argument) $(\prover, \verifier)$ between a polynomial time prover $\prover$ and $\ppt$ verifier $\verifier$, for a language $\mathcal{L}$ is a GMR zero knowledge proof (resp. argument) if the following holds. For every $\ppt$ verifier $\verifier^*$, there exists a $\ppt$ simulator $\simulator_{\verifier^*}$, such that 
+	\[
+	\Big\lbrace \view_{\verifier^{*}}\langle \prover(x,w), \verifier^{*(x)}\rangle \Big\rbrace_{\begin{subarray}{l}\secpar\in\NN,\\x\in \mathcal{L}\cap\bin^{\secpar},\\w \in R_\mathcal{L}(x)\end{subarray}} \approx_c \Big\lbrace \simulator_{\verifier^{*}}(x) \Big\rbrace_{\begin{subarray}{l}\secpar\in\NN,\\x\in \mathcal{L}\cap\bin^{\secpar},\\w \in R_\mathcal{L}(x)\end{subarray}}\enspace.
+	\]		
+\end{definition}
+
+
+\begin{definition}[\emph{Auxiliary-input} Zero-knowledge]
+	\index{Zero Knowledge!Auxiliary input}
+	An interactive proof (resp. argument) $(\prover, \verifier)$ between a polynomial time prover $\prover$ and $\ppt$ verifier $\verifier$, for a language $\mathcal{L}$ is an auxiliary-input zero knowledge proof (resp. argument) if the following holds. For every $\ppt$ verifier $\verifier^*$, there exists a $\ppt$ simulator $\simulator_{\verifier^*}$, such that 
+	\[
+	\Big\lbrace \view_{\verifier^{*}}\langle \prover(x,w), \verifier^{*}(x,y)\rangle \Big\rbrace_{\begin{subarray}{l}\secpar\in\NN,\\x\in \mathcal{L}\cap\bin^{\secpar},\\w \in R_\mathcal{L}(x)\\y \in \bin^*\end{subarray}} \approx_c \Big\lbrace \simulator_{\verifier^{*}}(x,y,1^t) \Big\rbrace_{\begin{subarray}{l}\secpar\in\NN,\\x\in \mathcal{L}\cap\bin^{\secpar},\\w \in R_\mathcal{L}(x)\\y \in \bin^*\end{subarray}}\enspace.
+	\]		
+\end{definition}
+	
+	
+
+
+\begin{definition}[\emph{Universal-simulation} Zero-knowledge]
+	\index{Zero Knowledge!Universal Simulation}
+	An interactive proof (resp. argument) $(\prover, \verifier)$ between a polynomial time prover $\prover$ and $\ppt$ verifier $\verifier$, for a language $\mathcal{L}$ is a universal-simulation zero knowledge proof (resp. argument) if the following holds. There exists a $\ppt$ simulator $\simulator$, such that for every $\ppt$ verifier $\verifier^*$ of running time at most $t(\secpar)$,
+	\[
+	\Big\lbrace \view_{\verifier^{*}}\langle \prover(x,w), \verifier^{*}(x)\rangle \Big\rbrace_{\begin{subarray}{l}\secpar\in\NN,\\x\in \mathcal{L}\cap\bin^{\secpar},\\w \in R_\mathcal{L}(x)\end{subarray}} \approx_c \Big\lbrace \simulator(\verifier^{*},1^t,x) \Big\rbrace_{\begin{subarray}{l}\secpar\in\NN,\\x\in \mathcal{L}\cap\bin^{\secpar},\\w \in R_\mathcal{L}(x)\end{subarray}}\enspace.
+	\]			
+\end{definition}
+
+\begin{definition}[\emph{Black-box-simulation} Zero-knowledge]
+	\index{Zero Knowledge!Black-box Simulation}
+	An interactive proof (resp. argument) $(\prover, \verifier)$ between a polynomial time prover $\prover$ and $\ppt$ verifier $\verifier$, for a language $\mathcal{L}$ is a black-box-simulation zero knowledge proof (resp. argument) if the following holds. There exists a $\ppt$ simulator $\simulator$, such that for every $\ppt$ verifier $\verifier^*$,
+	\[
+	\Big\lbrace \view_{\verifier^{*}}\langle \prover(x,w), \verifier^{*}\rangle \Big\rbrace_{\begin{subarray}{l}\secpar\in\NN,\\x\in \mathcal{L}\cap\bin^{\secpar},\\w \in R_\mathcal{L}(x)\end{subarray}} \approx_c \Big\lbrace \simulator^{\verifier^{*}}(x) \Big\rbrace_{\begin{subarray}{l}\secpar\in\NN,\\x\in \mathcal{L}\cap\bin^{\secpar},\\w \in R_\mathcal{L}(x)\end{subarray}}\enspace.
+	\]		
+\end{definition}
