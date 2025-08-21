@@ -1,2 +1,29 @@
 % !TEX root = ./main.tex
 
+
+
+\section{Non-interactive Witness Indistinguishability (NIWI)}
+	\label{sec:defn:NIWI}
+	
+	\begin{definition}[\cite{C:BarOngVad03}] A non-interactive witness-indistinguishable proof system $\NIWI=(\NIWI.\prove,\NIWI.\verify)$ for an $\npol$ relation $R_\lang$ consists of two polynomial-time algorithms:
+		\begin{itemize}
+			\item a probabilistic prover $\NIWI.\prove(x,w,\secparam)$ that given an instance $x$, witness $w$, and security parameter $\secparam$, produces a proof $\pi$.
+			\item a deterministic verifier $\NIWI.\verify(x,\pi)$ that verifies the proof.
+		\end{itemize}
+		We make the following requirements:
+		\begin{description}
+			\item[Completeness] for every $\secpar \in \NN, (x,w) \in R_\lang$,
+			\[
+				\prob{\pi \leftarrow \NIWI.\prove(x,w,\secparam)~:~\NIWI.\verify(x,\pi)=1} = 1
+			\]
+			\item[Soundness] for every $x \notin \lang$ and $\pi \in \bin^*$,
+			\[
+				\NIWI.\verify(x,\pi)=0\enspace.
+			\]
+			\item[Witness Indistinguishability] It holds that
+			\[
+				\Big\lbrace \NIWI.\prove(x,w_0,\secparam) \Big\rbrace_{\begin{subarray}{l}\secpar,x,\\w_0,w_1 \end{subarray}} \approx_c 				\Big\lbrace \NIWI.\prove(x,w_1,\secparam) \Big\rbrace_{\begin{subarray}{l}\secpar,x,\\w_0,w_1 \end{subarray}}\enspace,
+			\]
+where $\secpar \in \NN, x \in \bin^\secpar, w_0,w_1 \in R_\lang(x).$
+		\end{description}
+	\end{definition}
