@@ -1,0 +1,195 @@
+\documentclass{book}
+\usepackage{fullpage}
+
+
+\usepackage{charter}
+%\usepackage{kpfonts}
+%\usepackage{times}
+
+\usepackage{geometry}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+
+
+
+\usepackage{amsthm}
+\makeatletter
+\def\th@plain{%
+	\thm@notefont{}% same as heading font
+	\itshape % body font
+}
+\def\th@definition{%
+	\thm@notefont{}% same as heading font
+	\normalfont % body font
+}
+\makeatother
+%The above is to make the theorem titles appear in bold
+
+\let\circledS\relax
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{xspace}
+\usepackage{bm}
+\usepackage{enumitem}
+
+\usepackage[most]{tcolorbox}
+
+\newtcolorbox{defbox}[1][]
+{
+	sharp corners,
+	colback=cyan!7!white,
+	breakable,
+	enhanced,
+	#1,
+}
+
+
+\newtcolorbox{thmbox}[1][]
+{
+	sharp corners,
+	colback=green!30!white,
+	breakable,
+	enhanced,
+	#1,
+}
+
+\newtcolorbox{notebox}[1][]
+{
+	sharp corners,
+	colback=red!5!white,
+	breakable,
+	enhanced,
+	#1,
+}
+
+
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{claim}{Claim}
+\newtheorem{remark}{Remark}
+\newtheorem{corollary}{Corollary}
+\newtheorem{observation}{Observation}
+\newtheorem{example}{Example}
+
+\usepackage{boxedminipage}
+\usepackage{xparse}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{ifthen}
+
+
+
+
+%\usepackage{ulem}
+\usepackage[
+lambda,
+operators,
+advantage,
+sets,
+adversary,
+landau,
+probability,
+notions,	
+logic,
+ff,
+mm,
+primitives,
+events,
+complexity,
+asymptotics,
+keys]{cryptocode}
+
+%comment commands
+\newcommand{\arka}[1]{{\color{brown} Arka: #1}}
+
+
+\renewcommand\labelitemi{--}
+
+%\usepackage{geometry}
+
+\usepackage[pdftex,bookmarks=true,pdfstartview=FitH,colorlinks,linkcolor=Cerulean,filecolor=Cerulean,citecolor=NavyBlue,urlcolor=Cerulean]{hyperref}
+\pagestyle{plain}
+
+\newcommand{\bfmatrix}[1]{\mathbf{#1}}
+\renewcommand\vec{\mathbf}
+\newcommand{\llbrace}{\left\lbrace}
+\newcommand{\rrbrace}{\right\rbrace}
+\newcommand{\round}[1]{\left\lfloor #1 \right\rceil}
+\newcommand{\PR}{\mathbb{P}}
+\newcommand\inner[2]{\langle #1, #2 \rangle}
+\newcommand{\randomOracle}{\mathcal{O}}
+\newcommand{\oracle}[1]{\mathcal{#1}}
+\newcommand{\pspace}{\mathsf{PSPACE}}
+\newcommand{\iproof}{\mathsf{IP}}
+\newcommand{\CRHF}{\mathsf{CRHF}}
+\newcommand{\OWP}{\mathsf{OWP}}
+\newcommand{\OWF}{\mathsf{OWF}}
+\newcommand{\TDF}{\mathsf{TDF}}
+\newcommand{\ckt}{\mathsf{C}}
+\newcommand{\alice}{\mathsf{Alice}}
+\newcommand{\bob}{\mathsf{Bob}}
+\newcommand{\eve}{\mathsf{Eve}}
+\newcommand{\UOWHF}{\mathsf{UOWHF}}
+\newcommand{\dCRHF}{\mathsf{dCRHF}}
+\newcommand{\DTIME}{\mathsf{DTIME}}
+\newcommand{\DSPACE}{\mathsf{DSPACE}}
+\newcommand{\BPTIME}{\mathsf{BPTIME}}
+\newcommand{\SZK}{\mathsf{SZK}}
+\newcommand{\primitive}[1]{\mathsf{#1}}
+\newcommand{\machine}[1]{\mathsf{#1}}
+\newcommand{\lang}{\mathsf{L}}
+
+\newcommand{\com}{\mathsf{com}}
+
+
+
+\begin{document}
+	
+
+\title{\LaTeX definitions for Cryptography Primitives}
+\author{}
+\date{}
+ 
+\maketitle
+
+Collect definitions of cryptographic primitives so that it is easy to copy and use while writing papers. I will try as far as possible to stick to the macros defined in cryptocode. 
+
+
+
+\newpage 
+\tableofcontents
+
+\newpage
+
+\chapter{Notation}
+
+\chapter{Probability}
+	\input{probability}
+
+\chapter{Symmetric Key Primitives}
+	\input{symmetricKey}
+
+\chapter{Public Key Primitives}
+
+\chapter{Proofs}
+	\input{proofs}
+
+\chapter{Secure Computation}
+
+\chapter{Obfuscation}
+
+
+
+
+
+\newpage
+\bibliographystyle{alpha}
+\bibliography{./cryptobib/abbrev0,./cryptobib/crypto,./extrabib}
+
+
+
+\end{document}

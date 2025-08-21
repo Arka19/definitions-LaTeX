@@ -1,0 +1,18 @@
+% !TEX root = ./main.tex
+
+\subsection{Non-interactive Commitment Schemes}
+	\label{sec:defn:commitment}
+	
+	We define below bit commitment schemes
+	\begin{definition}[Non-interactive Bit Commitment Schemes]
+		A polynomial time computable function: $\com: \bin \times \bin^\secpar \mapsto \bin^{\ell(\secpar)}$ is a bit commitment if it satisfies the properties below:
+		\begin{description}
+			\item[Binding:] For any $r,r' \in \bin^\secpar, b,b' \in \bin$, if $\com(b;r)=\com(b';r')$ then $b=b'$.
+			\item[Computational Hiding:] The following holds:
+			\[
+				\Big\lbrace \com(0):r \sample \bin^\secpar \Big\rbrace \approx_c \Big\lbrace \com(1;r):r \sample \bin^\secpar \Big\rbrace \enspace.
+			\]			
+			where computational indistinguishability is with respect to arbitrary non-uniform $\ppt$ distinguisher.
+		\end{description}
+		
+	\end{definition}
