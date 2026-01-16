@@ -1,0 +1,20 @@
+repos:
+  # General file hygiene (These will work immediately)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+        args: ['--maxkb=5000']
+
+  # LaTeX Linter (ChkTeX)
+  # This now looks for 'chktex' on your local Windows system
+  - repo: local
+    hooks:
+      - id: chktex
+        name: LaTeX Linter
+        entry: chktex
+        language: system
+        files: \.tex$
+        args: ["-q", "-n22", "-n46"]
